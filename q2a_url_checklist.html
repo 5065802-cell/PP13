@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>URL Security Checklist</title></head>
+<body>
+  <h2>URL Security Checklist</h2>
+  <input type="text" id="url" size="50" placeholder="Enter URL to check">
+  <button onclick="checkUrl()">Check</button>
+  <ul id="warnings"></ul>
+
+  <script>
+    function checkUrl() {
+      var u = document.getElementById("url").value.trim();
+      var list = [];
+      if (!u.startsWith("https://")) list.push("Warning: Does not use HTTPS.");
+      if (u.includes("@") || u.includes(" ")) list.push("Warning: Contains suspicious characters.");
+      if (u.length > 60) list.push("Warning: Unusually long URL.");
+      if (/\d+\.\d+\.\d+\.\d+/.test(u)) list.push("Warning: Uses raw IP address instead of domain.");
+      document.getElementById("warnings").innerHTML = list.length
+        ? list.map(w => "<li style='color:red'>" + w + "</li>").join("")
+        : "<li style='color:green'>Basic checks passed.</li>";
+    }
+  </script>
+</body>
+</html>
